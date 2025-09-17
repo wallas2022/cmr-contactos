@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+// ---------- Generator ----------
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ---------- Datasource ----------
+datasource db {
+  provider = "mysql"            // o "postgresql" si usas Postgres
+  url      = env("DATABASE_URL")
+}
+
+// ---------- Enums ----------
+enum TipoInteraccion {
+  CALL
+  EMAIL
+  MEETING
+  OTHER
+}
+
+enum MetodoContacto {
+  EMAIL
+  PHONE
+  SMS
+  WHATSAPP
+  NONE
+}
+
+// ---------- Models ----------
+model Contacto {
+  id            Int                @id @default(autoincrement())
+  empresaId     Int
+  nombres       String
+  apellidos     String
+  email         String?            @unique
+  telefono      String?
+  direccion     String?
+  ciudad        String?
+  pais          String?
+  cumpleanios   DateTime?
+  aniversario   DateTime?
+  notas         String?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  // Relaciones
+  interacciones Interaccion[]
+  etiquetas     ContactoEtiqueta[]
+  preferencias  Preferencia?
+  perfiles      PerfilSocial[]
+  actividades   Actividad[]
+}
+
+model Interaccion {
+  id          Int             @id @default(autoincrement())
+  contactoId  Int
+  usuarioId   Int?
+  tipo        TipoInteraccion
+  asunto      String?
+  notas       String?
+  canal       String?         // "zoom", "telefono", "gmail"
+  ocurridaEn  DateTime        @default(now())
+  createdAt   DateTime        @default(now())
+
+  contacto    Contacto        @relation(fields: [contactoId], references: [id])
+}
+
+model Etiqueta {
+  id        Int                 @id @default(autoincrement())
+  nombre    String              @unique
+  colorHex  String?
+  createdAt DateTime            @default(now())
+
+  contactos ContactoEtiqueta[]
+}
+
+model ContactoEtiqueta {
+  contactoId Int
+  etiquetaId Int
+
+  contacto   Contacto  @relation(fields: [contactoId], references: [id])
+  etiqueta   Etiqueta  @relation(fields: [etiquetaId], references: [id])
+
+  @@id([contactoId, etiquetaId])
+}
+
+model Preferencia {
+  id              Int             @id @default(autoincrement())
+  contactoId      Int             @unique
+  metodoPreferido MetodoContacto  @default(EMAIL)
+  mejorHorario    String?
+  noContactar     Boolean         @default(false)
+  gdprConsentAt   DateTime?
+
+  contacto        Contacto        @relation(fields: [contactoId], references: [id])
+}
+
+model PerfilSocial {
+  id         Int       @id @default(autoincrement())
+  contactoId Int
+  red        String    // "linkedin", "facebook", "x", ...
+  usuario    String?
+  url        String?
+
+  contacto   Contacto  @relation(fields: [contactoId], references: [id])
+}
+
+model Actividad {
+  id          Int       @id @default(autoincrement())
+  contactoId  Int
+  tipo        String    // CREATED_CONTACT, UPDATED_CONTACT, NEW_INTERACTION, TAG_ADDED, ...
+  detalle     String?
+  ocurridaEn  DateTime  @default(now())
+
+  contacto    Contacto  @relation(fields: [contactoId], references: [id])
+}

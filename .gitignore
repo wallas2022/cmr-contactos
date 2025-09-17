@@ -75,3 +75,5 @@ printf "%s\n" \
 "prisma/dev.sqlite" \
 > .gitignore
 
+
+/generated/prisma

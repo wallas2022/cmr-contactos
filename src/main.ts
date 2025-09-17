@@ -2,11 +2,17 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor'
+import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
 
 
 
 async function bootstrap() {
 const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,     // <-- convierte strings a números/boolean/date según DTO
+    whitelist: true,
+    forbidNonWhitelisted: false,
+  }));
 app.setGlobalPrefix('api');
 app.useGlobalInterceptors(new TransformInterceptor());
 

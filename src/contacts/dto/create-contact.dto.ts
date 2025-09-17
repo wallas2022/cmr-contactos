@@ -11,8 +11,8 @@ export class CreateContactDto {
 @ApiPropertyOptional() @IsOptional() @IsString() direccion?: string;
 @ApiPropertyOptional() @IsOptional() @IsString() ciudad?: string;
 @ApiPropertyOptional() @IsOptional() @IsString() pais?: string;
-@ApiPropertyOptional() @IsOptional() @IsDateString() cumpleanios?: string;
-@ApiPropertyOptional() @IsOptional() @IsDateString() aniversario?: string;
+@ApiPropertyOptional() @IsOptional() cumpleanios?: string;
+@ApiPropertyOptional() @IsOptional() aniversario?: string;
 @ApiPropertyOptional({ type: [Number] }) @IsOptional() etiquetasIds?: number[];
 @ApiPropertyOptional() @IsOptional() notas?: string;
 }
