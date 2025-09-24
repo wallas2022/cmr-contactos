@@ -21,7 +21,8 @@ const config = new DocumentBuilder()
 .setTitle('Gestión de Contactos')
 .setDescription('APIs para contactos, interacciones, búsqueda avanzada, import/export, preferencias, perfiles sociales, alertas y actividad')
 .setVersion('1.0.0')
-.addBearerAuth()
+.addTag('contactos')
+//.addBearerAuth()
 .build();
 
 
