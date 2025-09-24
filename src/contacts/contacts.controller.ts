@@ -40,6 +40,11 @@ findOne(@Param('id') id: string) {
 return this.service.findOne(+id);
 }
 
+@Get('tag/:tagId')
+findByTag(@Param('tagId') tagId: string, @Query() { page, limit }: PaginationDto) {
+return this.service.findByTag(+tagId, { page, limit });
+}
+
 
 @Patch(':id')
 update(@Param('id') id: string, @Body() dto: UpdateContactDto) {

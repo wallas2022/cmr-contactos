@@ -18,15 +18,15 @@ datasource db {
 
 // ---------- Enums ----------
 enum TipoInteraccion {
-  CALL
-  EMAIL
+  LLAMADA
+  CORREO
   MEETING
   OTHER
 }
 
 enum MetodoContacto {
   EMAIL
-  PHONE
+  TELEOFNO
   SMS
   WHATSAPP
   NONE

@@ -1,0 +1,4 @@
+tunnels:
+  ms-contacts:
+    addr: 3000
+    proto: http

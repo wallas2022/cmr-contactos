@@ -57,6 +57,10 @@ export class ContactsService {
     return contacto;
   }
 
+  findByTag(tagId: number, { page = 1, limit = 20 }: { page?: number; limit?: number }) {
+    const skip = (page - 1) * limit;  
+    return skip
+    }
   async update(id: number, dto: UpdateContactDto) {
     const exists = await this.prisma.contacto.findUnique({ where: { id } });
     if (!exists) throw new NotFoundException('Contacto no encontrado');
