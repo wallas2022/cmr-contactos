@@ -1,0 +1,9 @@
+{
+  "outputDirectory": "dist",
+  "builds": [
+    {
+      "src": "**/*.{html,js,css,jsx,ts,tsx}",
+      "use": "@vercel/static-build"
+    }
+  ]
+}

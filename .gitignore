@@ -61,7 +61,7 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 # crea .gitignore
 printf "%s\n" \
 "node_modules/" \
-"dist/" \
+#"dist/" \
 ".env" \
 ".env.*" \
 "coverage/" \
