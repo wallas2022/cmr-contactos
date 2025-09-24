@@ -1,5 +1,4 @@
 {
-  "version": 2,
   "builds": [
     {
       "src": "src/main.ts",
@@ -7,6 +6,10 @@
     }
   ],
   "routes": [
+    {
+      "src": "/docs/(.*)",
+      "dest": "node_modules/swagger-ui-express/static/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "src/main.ts"
